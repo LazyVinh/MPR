@@ -4,8 +4,8 @@
 %
 function phi_matrix = berechnePhiBlockMatrix(A, B, C, N2, Nu)
  
-  [m, w] = size(C);
-  [v, n] = size(B);
+  m = size(C, 1);
+  n = size(B, 2);
 
   phi_matrix = zeros(m*N2, n*Nu);
 
