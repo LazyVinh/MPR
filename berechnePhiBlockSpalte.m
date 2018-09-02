@@ -1,7 +1,7 @@
 function phi_spalte = berechnePhiBlockSpalte(A, B, C, N2, spaltenIndex)
   
-  [m, _] = size(C);
-  [_, n] = size(B);
+  [m, w] = size(C);
+  [v, n] = size(B);
   
   phi_spalte = zeros(m*N2, n);
   
