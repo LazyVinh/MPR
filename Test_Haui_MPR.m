@@ -51,17 +51,17 @@ f_k = berechneFreieRegelgroesse(A, B, C, N2, x_p, u_k);
 phi = berechnePhiBlockMatrix(A, B, C, N2, Nu);
 J = @(du) berechneKostenfunktion(f_k, phi, du, r_k, lambda);
 f_x = berechneFreieRegelgroesseOhneC(A, B, N2, x_p, u_k);
-B_matrix = berechneBBlockMatrix(A, B, N2, Nu);
+B_matrix = berechnePhiBlockMatrix(A, B, eye(3), N2, Nu);
 x_ub_vec = berechneObereZustandsgrenze(v_max, beta_lim, N2);
 x_lb_vec = berechneUntereZustandsgrenze(v_min, beta_lim, N2);
 u_k_spalte = berechneU_kSpalte(u_k, Nu);
 u_max_spalte = berechneU_max_spalte(u_max, Nu);
 I_Dreieck = berechneI_Dreieck(Nu);
 
-A_ineq1 = zeros(3*N2,4*Nu)+B_matrix;
-A_ineq2 = zeros(3*N2,4*Nu)-B_matrix;
-A_ineq3 = zeros(4*Nu,4*Nu)+I_Dreieck;
-A_ineq4 = zeros(4*Nu,4*Nu)-I_Dreieck;
+A_ineq1 = B_matrix;
+A_ineq2 = -B_matrix;
+A_ineq3 = I_Dreieck;
+A_ineq4 = -I_Dreieck;
 
 A_ineq = [A_ineq1; A_ineq2; A_ineq3; A_ineq4];
 
@@ -82,7 +82,4 @@ du = fmincon(J, du_new, A_ineq, b_ineq);
  
 du_k = du(1:4);
  
-u = u_k+du_k;
- 
- 
-         
+u = u_k+du_k;    
